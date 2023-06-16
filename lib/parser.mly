@@ -24,6 +24,8 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 %token PLUS
 %token EOF
 
+%left PLUS MINUS LESSTHAN
+
 %start <prog> prog
 
 %%
@@ -33,11 +35,15 @@ prog:
   | EOF { failwith "Empty" }
 
 top:
-  | e = exp { TopExp e }
+  | e = eitherexp { TopExp e }
   | d = dec { TopDec d }
 
+eitherexp:
+  | e = openexp { e }
+  | e = closedexp { e }
+
 dec:
-  | DEF; name = ID; LPAREN; arg = ID; RPAREN; body = exp
+  | DEF; name = ID; LPAREN; arg = ID; RPAREN; body = closedexp
     { FunDec {
         name;
         params = [arg];
@@ -46,7 +52,31 @@ dec:
 
 exp:
   | c = constant { c }
-  | IF; antecedent = exp; THEN; consequent = exp; ELSE; alternative = exp
+  | b = binop { b }
+
+openexp:
+  | IF; antecedent = eitherexp; THEN; consequent = exp
+    { IfExp {
+        antecedent;
+        consequent;
+        alternative = None;
+        pos = pos_of_lexing_position $startpos } }
+  | IF; antecedent = eitherexp; THEN; consequent = openexp
+    { IfExp {
+        antecedent;
+        consequent;
+        alternative = None;
+        pos = pos_of_lexing_position $startpos } }
+  | IF; antecedent = eitherexp; THEN; consequent = closedexp; ELSE; alternative = openexp
+    { IfExp {
+        antecedent;
+        consequent;
+        alternative = Some alternative;
+        pos = pos_of_lexing_position $startpos } }
+
+closedexp:
+  | e = exp { e }
+  | IF; antecedent = eitherexp; THEN; consequent = closedexp; ELSE; alternative = closedexp
     { IfExp {
         antecedent;
         consequent;
@@ -55,3 +85,11 @@ exp:
 
 constant:
   | c = INT { IntExp c }
+
+binop:
+  | left = exp; LESSTHAN; right = exp
+    { BinExp { left; op = LtOp; right} }
+  | left = exp; PLUS; right = exp
+    { BinExp { left; op = PlusOp; right} }
+  | left = exp; MINUS; right = exp
+    { BinExp { left; op = MinusOp; right} }

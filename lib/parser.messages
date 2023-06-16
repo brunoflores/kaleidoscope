@@ -14,7 +14,10 @@ prog: IF THEN
 ##
 ## Ends in an error in state: 2.
 ##
-## exp -> IF . exp THEN exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
+## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ THEN INT IF EOF ELSE DEF ]
+## openexp -> IF . eitherexp THEN exp [ THEN INT IF EOF DEF ]
+## openexp -> IF . eitherexp THEN openexp [ THEN INT IF EOF DEF ]
+## openexp -> IF . eitherexp THEN closedexp ELSE openexp [ THEN INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF
@@ -22,59 +25,148 @@ prog: IF THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF INT RPAREN
+prog: INT RPAREN
 ##
-## Ends in an error in state: 3.
+## Ends in an error in state: 4.
 ##
-## exp -> IF exp . THEN exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
+## binop -> exp . LESSTHAN exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## binop -> exp . PLUS exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## binop -> exp . MINUS exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## closedexp -> exp . [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
-## IF exp
+## exp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT PLUS THEN
+##
+## Ends in an error in state: 5.
+##
+## binop -> exp PLUS . exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## exp PLUS
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT MINUS THEN
+##
+## Ends in an error in state: 9.
+##
+## binop -> exp MINUS . exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## exp MINUS
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT LESSTHAN THEN
+##
+## Ends in an error in state: 11.
+##
+## binop -> exp LESSTHAN . exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## exp LESSTHAN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT INT
+##
+## Ends in an error in state: 13.
+##
+## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ THEN INT IF EOF ELSE DEF ]
+## openexp -> IF eitherexp . THEN exp [ THEN INT IF EOF DEF ]
+## openexp -> IF eitherexp . THEN openexp [ THEN INT IF EOF DEF ]
+## openexp -> IF eitherexp . THEN closedexp ELSE openexp [ THEN INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 4, spurious reduction of production closedexp -> exp
+## In state 21, spurious reduction of production eitherexp -> closedexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 prog: IF INT THEN THEN
 ##
-## Ends in an error in state: 4.
+## Ends in an error in state: 14.
 ##
-## exp -> IF exp THEN . exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
+## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ THEN INT IF EOF ELSE DEF ]
+## openexp -> IF eitherexp THEN . exp [ THEN INT IF EOF DEF ]
+## openexp -> IF eitherexp THEN . openexp [ THEN INT IF EOF DEF ]
+## openexp -> IF eitherexp THEN . closedexp ELSE openexp [ THEN INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
-## IF exp THEN
+## IF eitherexp THEN
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF INT THEN INT THEN
+prog: IF INT THEN INT RPAREN
 ##
-## Ends in an error in state: 5.
+## Ends in an error in state: 16.
 ##
-## exp -> IF exp THEN exp . ELSE exp [ THEN INT IF EOF ELSE DEF ]
+## binop -> exp . LESSTHAN exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## binop -> exp . PLUS exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## binop -> exp . MINUS exp [ THEN PLUS MINUS LESSTHAN INT IF EOF ELSE DEF ]
+## closedexp -> exp . [ ELSE ]
+## openexp -> IF eitherexp THEN exp . [ THEN INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
-## IF exp THEN exp
+## IF eitherexp THEN exp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN IF INT THEN INT ELSE INT THEN
+##
+## Ends in an error in state: 17.
+##
+## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ THEN INT IF EOF ELSE DEF ]
+## openexp -> IF eitherexp THEN closedexp . ELSE openexp [ THEN INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN closedexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 4, spurious reduction of production closedexp -> exp
+## In state 20, spurious reduction of production closedexp -> IF eitherexp THEN closedexp ELSE closedexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 prog: IF INT THEN INT ELSE THEN
 ##
-## Ends in an error in state: 6.
+## Ends in an error in state: 18.
 ##
-## exp -> IF exp THEN exp ELSE . exp [ THEN INT IF EOF ELSE DEF ]
+## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ THEN INT IF EOF ELSE DEF ]
+## openexp -> IF eitherexp THEN closedexp ELSE . openexp [ THEN INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
-## IF exp THEN exp ELSE
+## IF eitherexp THEN closedexp ELSE
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 prog: DEF THEN
 ##
-## Ends in an error in state: 10.
+## Ends in an error in state: 23.
 ##
-## dec -> DEF . ID LPAREN ID RPAREN exp [ INT IF EOF DEF ]
+## dec -> DEF . ID LPAREN ID RPAREN closedexp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF
@@ -84,9 +176,9 @@ prog: DEF THEN
 
 prog: DEF ID THEN
 ##
-## Ends in an error in state: 11.
+## Ends in an error in state: 24.
 ##
-## dec -> DEF ID . LPAREN ID RPAREN exp [ INT IF EOF DEF ]
+## dec -> DEF ID . LPAREN ID RPAREN closedexp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID
@@ -96,9 +188,9 @@ prog: DEF ID THEN
 
 prog: DEF ID LPAREN THEN
 ##
-## Ends in an error in state: 12.
+## Ends in an error in state: 25.
 ##
-## dec -> DEF ID LPAREN . ID RPAREN exp [ INT IF EOF DEF ]
+## dec -> DEF ID LPAREN . ID RPAREN closedexp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID LPAREN
@@ -108,9 +200,9 @@ prog: DEF ID LPAREN THEN
 
 prog: DEF ID LPAREN ID THEN
 ##
-## Ends in an error in state: 13.
+## Ends in an error in state: 26.
 ##
-## dec -> DEF ID LPAREN ID . RPAREN exp [ INT IF EOF DEF ]
+## dec -> DEF ID LPAREN ID . RPAREN closedexp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID LPAREN ID
@@ -120,9 +212,9 @@ prog: DEF ID LPAREN ID THEN
 
 prog: DEF ID LPAREN ID RPAREN THEN
 ##
-## Ends in an error in state: 14.
+## Ends in an error in state: 27.
 ##
-## dec -> DEF ID LPAREN ID RPAREN . exp [ INT IF EOF DEF ]
+## dec -> DEF ID LPAREN ID RPAREN . closedexp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID LPAREN ID RPAREN
@@ -130,15 +222,96 @@ prog: DEF ID LPAREN ID RPAREN THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
+prog: DEF ID LPAREN ID RPAREN IF THEN
+##
+## Ends in an error in state: 28.
+##
+## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID RPAREN IF INT INT
+##
+## Ends in an error in state: 29.
+##
+## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 4, spurious reduction of production closedexp -> exp
+## In state 21, spurious reduction of production eitherexp -> closedexp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID RPAREN IF INT THEN THEN
+##
+## Ends in an error in state: 30.
+##
+## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID RPAREN IF INT THEN INT THEN
+##
+## Ends in an error in state: 31.
+##
+## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN closedexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 4, spurious reduction of production closedexp -> exp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID RPAREN IF INT THEN INT ELSE THEN
+##
+## Ends in an error in state: 32.
+##
+## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ INT IF EOF ELSE DEF ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN closedexp ELSE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
 prog: INT THEN
 ##
-## Ends in an error in state: 16.
+## Ends in an error in state: 34.
 ##
 ## nonempty_list(top) -> top . [ EOF ]
 ## nonempty_list(top) -> top . nonempty_list(top) [ EOF ]
 ##
 ## The known suffix of the stack is as follows:
 ## top
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 4, spurious reduction of production closedexp -> exp
+## In state 21, spurious reduction of production eitherexp -> closedexp
+## In state 36, spurious reduction of production top -> eitherexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
