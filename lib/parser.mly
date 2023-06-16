@@ -55,19 +55,23 @@ exp:
   | b = binop { b }
 
 openexp:
-  | IF; antecedent = eitherexp; THEN; consequent = exp
+  | IF; antecedent = eitherexp;
+    THEN; consequent = exp
     { IfExp {
         antecedent;
         consequent;
         alternative = None;
         pos = pos_of_lexing_position $startpos } }
-  | IF; antecedent = eitherexp; THEN; consequent = openexp
+  | IF; antecedent = eitherexp;
+    THEN; consequent = openexp
     { IfExp {
         antecedent;
         consequent;
         alternative = None;
         pos = pos_of_lexing_position $startpos } }
-  | IF; antecedent = eitherexp; THEN; consequent = closedexp; ELSE; alternative = openexp
+  | IF; antecedent = eitherexp;
+    THEN; consequent = closedexp;
+    ELSE; alternative = openexp
     { IfExp {
         antecedent;
         consequent;
@@ -76,7 +80,9 @@ openexp:
 
 closedexp:
   | e = exp { e }
-  | IF; antecedent = eitherexp; THEN; consequent = closedexp; ELSE; alternative = closedexp
+  | IF; antecedent = eitherexp;
+    THEN; consequent = closedexp;
+    ELSE; alternative = closedexp
     { IfExp {
         antecedent;
         consequent;
