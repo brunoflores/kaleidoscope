@@ -1,4 +1,4 @@
-prog: INT
+prog: THEN
 ##
 ## Ends in an error in state: 0.
 ##
@@ -6,6 +6,78 @@ prog: INT
 ##
 ## The known suffix of the stack is as follows:
 ##
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF THEN
+##
+## Ends in an error in state: 2.
+##
+## exp -> IF . exp THEN exp ELSE exp [ THEN EOF ELSE ]
+##
+## The known suffix of the stack is as follows:
+## IF
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT INT
+##
+## Ends in an error in state: 3.
+##
+## exp -> IF exp . THEN exp ELSE exp [ THEN EOF ELSE ]
+##
+## The known suffix of the stack is as follows:
+## IF exp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN THEN
+##
+## Ends in an error in state: 4.
+##
+## exp -> IF exp THEN . exp ELSE exp [ THEN EOF ELSE ]
+##
+## The known suffix of the stack is as follows:
+## IF exp THEN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN INT THEN
+##
+## Ends in an error in state: 5.
+##
+## exp -> IF exp THEN exp . ELSE exp [ THEN EOF ELSE ]
+##
+## The known suffix of the stack is as follows:
+## IF exp THEN exp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN INT ELSE THEN
+##
+## Ends in an error in state: 6.
+##
+## exp -> IF exp THEN exp ELSE . exp [ THEN EOF ELSE ]
+##
+## The known suffix of the stack is as follows:
+## IF exp THEN exp ELSE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT THEN
+##
+## Ends in an error in state: 11.
+##
+## prog -> exp . EOF [ # ]
+##
+## The known suffix of the stack is as follows:
+## exp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>

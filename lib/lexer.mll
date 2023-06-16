@@ -22,9 +22,14 @@ let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 rule read = parse
   | white    { read lexbuf }
   | newline  { next_line lexbuf; read lexbuf }
-  | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
+  | "#"      { eat_comment lexbuf }
   | "def"    { DEF }
   | "extern" { EXTERN }
+  | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | id       { ID (Lexing.lexeme lexbuf) }
   | _        { raise (SyntaxError ("Unexpected: " ^ Lexing.lexeme lexbuf)) }
   | eof      { EOF }
+
+and eat_comment = parse
+  | newline { read lexbuf }
+  | _       { eat_comment lexbuf }
