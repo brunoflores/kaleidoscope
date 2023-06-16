@@ -1,7 +1,10 @@
 type pos = { pos_fname : string; pos_lnum : int; pos_bol : int; pos_cnum : int }
 [@@deriving show]
 
-type exp =
+type prog = top list
+and top = TopExp of exp | TopDec of dec
+
+and exp =
   | IntExp of int
   | BinExp of { left : exp; op : op; right : exp }
   | IfExp of {

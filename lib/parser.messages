@@ -14,7 +14,7 @@ prog: IF THEN
 ##
 ## Ends in an error in state: 2.
 ##
-## exp -> IF . exp THEN exp ELSE exp [ THEN EOF ELSE ]
+## exp -> IF . exp THEN exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF
@@ -22,11 +22,11 @@ prog: IF THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF INT INT
+prog: IF INT RPAREN
 ##
 ## Ends in an error in state: 3.
 ##
-## exp -> IF exp . THEN exp ELSE exp [ THEN EOF ELSE ]
+## exp -> IF exp . THEN exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF exp
@@ -38,7 +38,7 @@ prog: IF INT THEN THEN
 ##
 ## Ends in an error in state: 4.
 ##
-## exp -> IF exp THEN . exp ELSE exp [ THEN EOF ELSE ]
+## exp -> IF exp THEN . exp ELSE exp [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF exp THEN
@@ -50,7 +50,7 @@ prog: IF INT THEN INT THEN
 ##
 ## Ends in an error in state: 5.
 ##
-## exp -> IF exp THEN exp . ELSE exp [ THEN EOF ELSE ]
+## exp -> IF exp THEN exp . ELSE exp [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF exp THEN exp
@@ -62,7 +62,7 @@ prog: IF INT THEN INT ELSE THEN
 ##
 ## Ends in an error in state: 6.
 ##
-## exp -> IF exp THEN exp ELSE . exp [ THEN EOF ELSE ]
+## exp -> IF exp THEN exp ELSE . exp [ THEN INT IF EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF exp THEN exp ELSE
@@ -70,14 +70,75 @@ prog: IF INT THEN INT ELSE THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: INT THEN
+prog: DEF THEN
+##
+## Ends in an error in state: 10.
+##
+## dec -> DEF . ID LPAREN ID RPAREN exp [ INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## DEF
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID THEN
 ##
 ## Ends in an error in state: 11.
 ##
-## prog -> exp . EOF [ # ]
+## dec -> DEF ID . LPAREN ID RPAREN exp [ INT IF EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
-## exp
+## DEF ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN THEN
+##
+## Ends in an error in state: 12.
+##
+## dec -> DEF ID LPAREN . ID RPAREN exp [ INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## DEF ID LPAREN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID THEN
+##
+## Ends in an error in state: 13.
+##
+## dec -> DEF ID LPAREN ID . RPAREN exp [ INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## DEF ID LPAREN ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: DEF ID LPAREN ID RPAREN THEN
+##
+## Ends in an error in state: 14.
+##
+## dec -> DEF ID LPAREN ID RPAREN . exp [ INT IF EOF DEF ]
+##
+## The known suffix of the stack is as follows:
+## DEF ID LPAREN ID RPAREN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT THEN
+##
+## Ends in an error in state: 16.
+##
+## nonempty_list(top) -> top . [ EOF ]
+## nonempty_list(top) -> top . nonempty_list(top) [ EOF ]
+##
+## The known suffix of the stack is as follows:
+## top
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>

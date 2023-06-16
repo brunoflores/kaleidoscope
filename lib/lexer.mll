@@ -25,6 +25,14 @@ rule read = parse
   | "#"      { eat_comment lexbuf }
   | "def"    { DEF }
   | "extern" { EXTERN }
+  | "if"     { IF }
+  | "then"   { THEN }
+  | "else"   { ELSE }
+  | "<"      { LESSTHAN }
+  | "-"      { MINUS }
+  | "+"      { PLUS }
+  | "("      { LPAREN }
+  | ")"      { RPAREN }
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | id       { ID (Lexing.lexeme lexbuf) }
   | _        { raise (SyntaxError ("Unexpected: " ^ Lexing.lexeme lexbuf)) }

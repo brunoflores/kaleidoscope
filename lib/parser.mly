@@ -17,15 +17,32 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 %token ELSE
 %token DEF
 %token EXTERN
+%token LPAREN
+%token RPAREN
+%token LESSTHAN
+%token MINUS
+%token PLUS
 %token EOF
 
-%start <exp option> prog
+%start <prog> prog
 
 %%
 
 prog:
-  | e = exp; EOF { Some e }
-  | EOF { None }
+  | t = top+; EOF { t }
+  | EOF { failwith "Empty" }
+
+top:
+  | e = exp { TopExp e }
+  | d = dec { TopDec d }
+
+dec:
+  | DEF; name = ID; LPAREN; arg = ID; RPAREN; body = exp
+    { FunDec {
+        name;
+        params = [arg];
+        body;
+        pos = pos_of_lexing_position $startpos } }
 
 exp:
   | c = constant { c }
