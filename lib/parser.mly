@@ -53,6 +53,7 @@ dec:
 exp:
   | c = constant { c }
   | b = binop { b }
+  | x = lvalue { VarExp x }
 
 openexp:
   | IF; antecedent = eitherexp;
@@ -99,3 +100,6 @@ binop:
     { BinExp { left; op = PlusOp; right} }
   | left = exp; MINUS; right = exp
     { BinExp { left; op = MinusOp; right} }
+
+lvalue:
+  | id = ID { SimpleVar id }

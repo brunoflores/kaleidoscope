@@ -7,6 +7,7 @@ and top = TopExp of exp | TopDec of dec
 and exp =
   | IntExp of int
   | BinExp of { left : exp; op : op; right : exp }
+  | VarExp of var
   | IfExp of {
       antecedent : exp;
       consequent : exp;
@@ -18,3 +19,4 @@ and dec =
   | FunDec of { name : string; params : string list; body : exp; pos : pos }
 
 and op = PlusOp | MinusOp | LtOp
+and var = SimpleVar of string
