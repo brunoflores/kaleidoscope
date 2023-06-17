@@ -33,7 +33,7 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 
 prog:
   | t = top+; EOF { t }
-  | EOF { failwith "Empty" }
+  | EOF { [] }
 
 top:
   | e = eitherexp { TopExp e }
