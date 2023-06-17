@@ -56,7 +56,7 @@ let pretty_print_err = function
   | None, message -> print_endline message
 *)
 
-let succeed _ = print_endline "end"
+let succeed prog = Format.printf "%a\n" Ast.pp_prog prog
 
 let fail text buffer checkpoint =
   (* Indicate where in the input file the error occurred. *)
