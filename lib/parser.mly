@@ -22,6 +22,7 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 %token LESSTHAN
 %token MINUS
 %token PLUS
+%token COMMA
 %token EOF
 
 %left PLUS MINUS LESSTHAN
@@ -54,6 +55,8 @@ exp:
   | c = constant { c }
   | b = binop { b }
   | x = lvalue { VarExp x }
+  | id = ID; LPAREN; args = exprlist; RPAREN
+    { CallExp { id; args; pos = pos_of_lexing_position $startpos } }
 
 openexp:
   | IF; antecedent = eitherexp;
@@ -103,3 +106,6 @@ binop:
 
 lvalue:
   | id = ID { SimpleVar id }
+
+exprlist:
+  | l = separated_list(COMMA, eitherexp) { l }

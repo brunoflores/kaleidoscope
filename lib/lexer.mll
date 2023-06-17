@@ -31,6 +31,7 @@ rule read = parse
   | "<"      { LESSTHAN }
   | "-"      { MINUS }
   | "+"      { PLUS }
+  | ","      { COMMA }
   | "("      { LPAREN }
   | ")"      { RPAREN }
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }

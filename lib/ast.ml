@@ -8,6 +8,7 @@ and exp =
   | IntExp of int
   | BinExp of { left : exp; op : op; right : exp }
   | VarExp of var
+  | CallExp of { id : string; args : exp list; pos : pos }
   | IfExp of {
       antecedent : exp;
       consequent : exp;
