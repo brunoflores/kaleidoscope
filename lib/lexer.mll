@@ -39,5 +39,5 @@ rule read = parse
   | eof      { EOF }
 
 and eat_comment = parse
-  | newline { read lexbuf }
+  | newline { next_line lexbuf; read lexbuf }
   | _       { eat_comment lexbuf }
