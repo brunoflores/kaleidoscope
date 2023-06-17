@@ -221,7 +221,7 @@ prog: IF INT THEN INT ELSE THEN
 
 prog: DEF THEN
 ##
-## Ends in an error in state: 33.
+## Ends in an error in state: 32.
 ##
 ## dec -> DEF . ID LPAREN ID RPAREN closedexp [ INT IF ID EOF DEF ]
 ##
@@ -233,7 +233,7 @@ prog: DEF THEN
 
 prog: DEF ID THEN
 ##
-## Ends in an error in state: 34.
+## Ends in an error in state: 33.
 ##
 ## dec -> DEF ID . LPAREN ID RPAREN closedexp [ INT IF ID EOF DEF ]
 ##
@@ -245,7 +245,7 @@ prog: DEF ID THEN
 
 prog: DEF ID LPAREN THEN
 ##
-## Ends in an error in state: 35.
+## Ends in an error in state: 34.
 ##
 ## dec -> DEF ID LPAREN . ID RPAREN closedexp [ INT IF ID EOF DEF ]
 ##
@@ -257,7 +257,7 @@ prog: DEF ID LPAREN THEN
 
 prog: DEF ID LPAREN ID THEN
 ##
-## Ends in an error in state: 36.
+## Ends in an error in state: 35.
 ##
 ## dec -> DEF ID LPAREN ID . RPAREN closedexp [ INT IF ID EOF DEF ]
 ##
@@ -269,7 +269,7 @@ prog: DEF ID LPAREN ID THEN
 
 prog: DEF ID LPAREN ID RPAREN THEN
 ##
-## Ends in an error in state: 37.
+## Ends in an error in state: 36.
 ##
 ## dec -> DEF ID LPAREN ID RPAREN . closedexp [ INT IF ID EOF DEF ]
 ##
@@ -281,7 +281,7 @@ prog: DEF ID LPAREN ID RPAREN THEN
 
 prog: DEF ID LPAREN ID RPAREN IF THEN
 ##
-## Ends in an error in state: 38.
+## Ends in an error in state: 37.
 ##
 ## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
 ##
@@ -293,7 +293,7 @@ prog: DEF ID LPAREN ID RPAREN IF THEN
 
 prog: DEF ID LPAREN ID RPAREN IF INT RPAREN
 ##
-## Ends in an error in state: 39.
+## Ends in an error in state: 38.
 ##
 ## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
 ##
@@ -312,7 +312,7 @@ prog: DEF ID LPAREN ID RPAREN IF INT RPAREN
 
 prog: DEF ID LPAREN ID RPAREN IF INT THEN THEN
 ##
-## Ends in an error in state: 40.
+## Ends in an error in state: 39.
 ##
 ## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
 ##
@@ -324,7 +324,7 @@ prog: DEF ID LPAREN ID RPAREN IF INT THEN THEN
 
 prog: DEF ID LPAREN ID RPAREN IF INT THEN INT THEN
 ##
-## Ends in an error in state: 41.
+## Ends in an error in state: 40.
 ##
 ## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ INT IF ID EOF ELSE DEF ]
 ##
@@ -342,7 +342,7 @@ prog: DEF ID LPAREN ID RPAREN IF INT THEN INT THEN
 
 prog: DEF ID LPAREN ID RPAREN IF INT THEN INT ELSE THEN
 ##
-## Ends in an error in state: 42.
+## Ends in an error in state: 41.
 ##
 ## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ INT IF ID EOF ELSE DEF ]
 ##
@@ -354,10 +354,9 @@ prog: DEF ID LPAREN ID RPAREN IF INT THEN INT ELSE THEN
 
 prog: INT THEN
 ##
-## Ends in an error in state: 44.
+## Ends in an error in state: 43.
 ##
-## nonempty_list(top) -> top . [ EOF ]
-## nonempty_list(top) -> top . nonempty_list(top) [ EOF ]
+## list(top) -> top . list(top) [ EOF ]
 ##
 ## The known suffix of the stack is as follows:
 ## top
@@ -368,7 +367,7 @@ prog: INT THEN
 ## may provide an INCOMPLETE view of the future (what was expected next).
 ## In state 11, spurious reduction of production closedexp -> exp
 ## In state 23, spurious reduction of production eitherexp -> closedexp
-## In state 46, spurious reduction of production top -> eitherexp
+## In state 45, spurious reduction of production top -> eitherexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
