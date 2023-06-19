@@ -1,6 +1,6 @@
 (library
  (name kaleidoscope)
- (libraries stdio menhirLib)
+ (libraries stdio menhirLib llvm)
  (preprocess
   (pps ppx_deriving.show)))
 

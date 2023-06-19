@@ -56,7 +56,10 @@ let pretty_print_err = function
   | None, message -> print_endline message
 *)
 
-let succeed prog = Format.printf "%a\n" Ast.pp_prog prog
+let succeed prog =
+  (* Format.printf "%a\n" Ast.pp_prog prog *)
+  let code = Codegen.gentop prog in
+  print_endline code
 
 let fail text buffer checkpoint =
   (* Indicate where in the input file the error occurred. *)
