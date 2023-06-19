@@ -34,12 +34,16 @@ let rec genexp = function
   | _ -> failwith "not implemented"
 
 and gendec = function
-  | Ast.FunDec { name; params; body = _; pos = _ } ->
+  | Ast.FunDec { name; params; body; pos = _ } ->
       let double = L.double_type ctx in
       let n = List.length params in
       let argtys = Array.make n double in
       let rt = L.function_type double argtys in
       let fn = L.define_function name rt topmod in
+      let body = genexp body in
+      let entry = L.entry_block fn in
+      let builder = L.builder_at_end ctx entry in
+      let _ = L.build_ret body builder in
       fn
 
 let gentop top =
