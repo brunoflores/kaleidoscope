@@ -15,7 +15,8 @@ let rec genexp (env : (string * L.llvalue) list) (b : L.llbuilder) = function
       match op with
       | Ast.PlusOp -> L.build_fadd left right "addtmp" b
       | Ast.MinusOp -> L.build_fsub left right "subtmp" b
-      | _ -> failwith "not implemented")
+      | Ast.TimesOp -> L.build_fmul left right "multmp" b
+      | Ast.LtOp -> failwith "not implemented")
   | Ast.CallExp { id; args = caller_args; pos = _ } -> (
       match L.lookup_function id topmod with
       | Some f ->
