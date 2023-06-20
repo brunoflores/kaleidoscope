@@ -2,10 +2,6 @@ module L = Llvm
 
 let ctx = L.create_context ()
 let topmod = L.create_module ctx "top"
-let mainrt = L.function_type (L.double_type ctx) [||]
-let main = L.define_function "main" mainrt topmod
-let entry = L.entry_block main
-let builder = L.builder_at_end ctx entry
 
 (* -- *)
 
@@ -33,7 +29,7 @@ let rec genexp (env : (string * L.llvalue) list) (b : L.llbuilder) = function
           let arg_vals = Array.of_list @@ List.map (genexp env b) caller_args in
           let _block = L.insertion_block b in
           L.build_call f arg_vals "calltmp" b
-      | None -> failwith "undefined function call")
+      | None -> failwith @@ Format.sprintf "undefined function call: %s" id)
   | _ -> failwith "not implemented"
 
 and gendec (b : L.llbuilder) = function
@@ -54,6 +50,10 @@ let gentop top =
   (* let v = float_of_int 42 in *)
   (* let v = L.const_float ty v in *)
   (* let _ = L.build_ret v builder in *)
+  let mainrt = L.function_type (L.double_type ctx) [||] in
+  let main = L.define_function "main" mainrt topmod in
+  let entry = L.entry_block main in
+  let builder = L.builder_at_end ctx entry in
   let _ =
     List.iter
       (fun i ->
