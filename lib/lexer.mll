@@ -24,13 +24,13 @@ rule read = parse
   | newline  { next_line lexbuf; read lexbuf }
   | "#"      { eat_comment lexbuf }
   | "def"    { DEF }
-  | "extern" { EXTERN }
   | "if"     { IF }
   | "then"   { THEN }
   | "else"   { ELSE }
   | "<"      { LESSTHAN }
   | "-"      { MINUS }
   | "+"      { PLUS }
+  | "*"      { TIMES }
   | ","      { COMMA }
   | "("      { LPAREN }
   | ")"      { RPAREN }

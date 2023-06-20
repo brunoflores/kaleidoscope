@@ -1,4 +1,4 @@
-prog: THEN
+prog: TIMES
 ##
 ## Ends in an error in state: 0.
 ##
@@ -10,39 +10,23 @@ prog: THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF THEN
+prog: LPAREN TIMES
 ##
-## Ends in an error in state: 2.
+## Ends in an error in state: 1.
 ##
-## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
-## openexp -> IF . eitherexp THEN exp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF . eitherexp THEN openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF . eitherexp THEN closedexp ELSE openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
+## exp -> LPAREN . exp RPAREN [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
-## IF
+## LPAREN
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: ID EXTERN
-##
-## Ends in an error in state: 3.
-##
-## exp -> ID . LPAREN exprlist RPAREN [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## lvalue -> ID . [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-##
-## The known suffix of the stack is as follows:
-## ID
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-prog: ID LPAREN THEN
+prog: ID LPAREN TIMES
 ##
 ## Ends in an error in state: 4.
 ##
-## exp -> ID LPAREN . exprlist RPAREN [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
+## exp -> ID LPAREN . exprlist RPAREN [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
 ## ID LPAREN
@@ -50,26 +34,38 @@ prog: ID LPAREN THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: INT LPAREN
+prog: IF TIMES
 ##
-## Ends in an error in state: 11.
+## Ends in an error in state: 5.
 ##
-## binop -> exp . LESSTHAN exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## binop -> exp . PLUS exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## binop -> exp . MINUS exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## closedexp -> exp . [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
+## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ THEN RPAREN LPAREN INT IF ID EOF ELSE DEF COMMA ]
+## openexp -> IF . eitherexp THEN exp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF . eitherexp THEN openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF . eitherexp THEN closedexp ELSE openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
-## exp
+## IF
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: INT PLUS THEN
+prog: INT TIMES TIMES
 ##
-## Ends in an error in state: 12.
+## Ends in an error in state: 9.
 ##
-## binop -> exp PLUS . exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
+## binop -> exp TIMES . exp [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
+##
+## The known suffix of the stack is as follows:
+## exp TIMES
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: INT PLUS TIMES
+##
+## Ends in an error in state: 13.
+##
+## binop -> exp PLUS . exp [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
 ## exp PLUS
@@ -77,11 +73,11 @@ prog: INT PLUS THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: INT MINUS THEN
+prog: INT MINUS TIMES
 ##
-## Ends in an error in state: 16.
+## Ends in an error in state: 15.
 ##
-## binop -> exp MINUS . exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
+## binop -> exp MINUS . exp [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
 ## exp MINUS
@@ -89,11 +85,11 @@ prog: INT MINUS THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: INT LESSTHAN THEN
+prog: INT LESSTHAN TIMES
 ##
-## Ends in an error in state: 18.
+## Ends in an error in state: 17.
 ##
-## binop -> exp LESSTHAN . exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
+## binop -> exp LESSTHAN . exp [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
 ## exp LESSTHAN
@@ -101,9 +97,79 @@ prog: INT LESSTHAN THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: ID LPAREN INT THEN
+prog: IF INT RPAREN
+##
+## Ends in an error in state: 19.
+##
+## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ THEN RPAREN LPAREN INT IF ID EOF ELSE DEF COMMA ]
+## openexp -> IF eitherexp . THEN exp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF eitherexp . THEN openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF eitherexp . THEN closedexp ELSE openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 8, spurious reduction of production closedexp -> exp
+## In state 27, spurious reduction of production eitherexp -> closedexp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN TIMES
 ##
 ## Ends in an error in state: 20.
+##
+## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ THEN RPAREN LPAREN INT IF ID EOF ELSE DEF COMMA ]
+## openexp -> IF eitherexp THEN . exp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF eitherexp THEN . openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+## openexp -> IF eitherexp THEN . closedexp ELSE openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN IF INT THEN INT ELSE INT THEN
+##
+## Ends in an error in state: 23.
+##
+## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ THEN RPAREN LPAREN INT IF ID EOF ELSE DEF COMMA ]
+## openexp -> IF eitherexp THEN closedexp . ELSE openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN closedexp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 8, spurious reduction of production closedexp -> exp
+## In state 26, spurious reduction of production closedexp -> IF eitherexp THEN closedexp ELSE closedexp
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: IF INT THEN INT ELSE TIMES
+##
+## Ends in an error in state: 24.
+##
+## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ THEN RPAREN LPAREN INT IF ID EOF ELSE DEF COMMA ]
+## openexp -> IF eitherexp THEN closedexp ELSE . openexp [ THEN RPAREN LPAREN INT IF ID EOF DEF COMMA ]
+##
+## The known suffix of the stack is as follows:
+## IF eitherexp THEN closedexp ELSE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID LPAREN INT THEN
+##
+## Ends in an error in state: 32.
 ##
 ## separated_nonempty_list(COMMA,eitherexp) -> eitherexp . [ RPAREN ]
 ## separated_nonempty_list(COMMA,eitherexp) -> eitherexp . COMMA separated_nonempty_list(COMMA,eitherexp) [ RPAREN ]
@@ -115,15 +181,15 @@ prog: ID LPAREN INT THEN
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
-## In state 23, spurious reduction of production eitherexp -> closedexp
+## In state 8, spurious reduction of production closedexp -> exp
+## In state 27, spurious reduction of production eitherexp -> closedexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: ID LPAREN INT COMMA THEN
+prog: ID LPAREN INT COMMA TIMES
 ##
-## Ends in an error in state: 21.
+## Ends in an error in state: 33.
 ##
 ## separated_nonempty_list(COMMA,eitherexp) -> eitherexp COMMA . separated_nonempty_list(COMMA,eitherexp) [ RPAREN ]
 ##
@@ -133,97 +199,27 @@ prog: ID LPAREN INT COMMA THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF INT RPAREN
+prog: LPAREN INT THEN
 ##
-## Ends in an error in state: 24.
+## Ends in an error in state: 35.
 ##
-## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
-## openexp -> IF eitherexp . THEN exp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF eitherexp . THEN openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF eitherexp . THEN closedexp ELSE openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
+## binop -> exp . LESSTHAN exp [ TIMES RPAREN PLUS MINUS LESSTHAN ]
+## binop -> exp . PLUS exp [ TIMES RPAREN PLUS MINUS LESSTHAN ]
+## binop -> exp . MINUS exp [ TIMES RPAREN PLUS MINUS LESSTHAN ]
+## binop -> exp . TIMES exp [ TIMES RPAREN PLUS MINUS LESSTHAN ]
+## exp -> LPAREN exp . RPAREN [ TIMES THEN RPAREN PLUS MINUS LPAREN LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
 ##
 ## The known suffix of the stack is as follows:
-## IF eitherexp
-##
-## WARNING: This example involves spurious reductions.
-## This implies that, although the LR(1) items shown above provide an
-## accurate view of the past (what has been recognized so far), they
-## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
-## In state 23, spurious reduction of production eitherexp -> closedexp
+## LPAREN exp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: IF INT THEN THEN
+prog: DEF TIMES
 ##
-## Ends in an error in state: 25.
+## Ends in an error in state: 37.
 ##
-## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
-## openexp -> IF eitherexp THEN . exp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF eitherexp THEN . openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-## openexp -> IF eitherexp THEN . closedexp ELSE openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-##
-## The known suffix of the stack is as follows:
-## IF eitherexp THEN
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-prog: IF INT THEN INT LPAREN
-##
-## Ends in an error in state: 27.
-##
-## binop -> exp . LESSTHAN exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## binop -> exp . PLUS exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## binop -> exp . MINUS exp [ THEN RPAREN PLUS MINUS LESSTHAN INT IF ID EOF ELSE DEF COMMA ]
-## closedexp -> exp . [ ELSE ]
-## openexp -> IF eitherexp THEN exp . [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-##
-## The known suffix of the stack is as follows:
-## IF eitherexp THEN exp
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-prog: IF INT THEN IF INT THEN INT ELSE INT THEN
-##
-## Ends in an error in state: 28.
-##
-## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
-## openexp -> IF eitherexp THEN closedexp . ELSE openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-##
-## The known suffix of the stack is as follows:
-## IF eitherexp THEN closedexp
-##
-## WARNING: This example involves spurious reductions.
-## This implies that, although the LR(1) items shown above provide an
-## accurate view of the past (what has been recognized so far), they
-## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
-## In state 31, spurious reduction of production closedexp -> IF eitherexp THEN closedexp ELSE closedexp
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-prog: IF INT THEN INT ELSE THEN
-##
-## Ends in an error in state: 29.
-##
-## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ THEN RPAREN INT IF ID EOF ELSE DEF COMMA ]
-## openexp -> IF eitherexp THEN closedexp ELSE . openexp [ THEN RPAREN INT IF ID EOF DEF COMMA ]
-##
-## The known suffix of the stack is as follows:
-## IF eitherexp THEN closedexp ELSE
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-prog: DEF THEN
-##
-## Ends in an error in state: 32.
-##
-## dec -> DEF . ID LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ INT IF ID EOF DEF ]
+## dec -> DEF . ID LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ LPAREN INT IF ID EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF
@@ -231,11 +227,11 @@ prog: DEF THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID THEN
+prog: DEF ID TIMES
 ##
-## Ends in an error in state: 33.
+## Ends in an error in state: 38.
 ##
-## dec -> DEF ID . LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ INT IF ID EOF DEF ]
+## dec -> DEF ID . LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ LPAREN INT IF ID EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID
@@ -243,11 +239,11 @@ prog: DEF ID THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN THEN
+prog: DEF ID LPAREN TIMES
 ##
-## Ends in an error in state: 34.
+## Ends in an error in state: 39.
 ##
-## dec -> DEF ID LPAREN . loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ INT IF ID EOF DEF ]
+## dec -> DEF ID LPAREN . loption(separated_nonempty_list(COMMA,ID)) RPAREN closedexp [ LPAREN INT IF ID EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID LPAREN
@@ -255,9 +251,9 @@ prog: DEF ID LPAREN THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN ID THEN
+prog: DEF ID LPAREN ID TIMES
 ##
-## Ends in an error in state: 35.
+## Ends in an error in state: 40.
 ##
 ## separated_nonempty_list(COMMA,ID) -> ID . [ RPAREN ]
 ## separated_nonempty_list(COMMA,ID) -> ID . COMMA separated_nonempty_list(COMMA,ID) [ RPAREN ]
@@ -268,9 +264,9 @@ prog: DEF ID LPAREN ID THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN ID COMMA THEN
+prog: DEF ID LPAREN ID COMMA TIMES
 ##
-## Ends in an error in state: 36.
+## Ends in an error in state: 41.
 ##
 ## separated_nonempty_list(COMMA,ID) -> ID COMMA . separated_nonempty_list(COMMA,ID) [ RPAREN ]
 ##
@@ -280,11 +276,11 @@ prog: DEF ID LPAREN ID COMMA THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN RPAREN THEN
+prog: DEF ID LPAREN RPAREN TIMES
 ##
-## Ends in an error in state: 40.
+## Ends in an error in state: 45.
 ##
-## dec -> DEF ID LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN . closedexp [ INT IF ID EOF DEF ]
+## dec -> DEF ID LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN . closedexp [ LPAREN INT IF ID EOF DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## DEF ID LPAREN loption(separated_nonempty_list(COMMA,ID)) RPAREN
@@ -292,11 +288,11 @@ prog: DEF ID LPAREN RPAREN THEN
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN RPAREN IF THEN
+prog: DEF ID LPAREN RPAREN IF TIMES
 ##
-## Ends in an error in state: 41.
+## Ends in an error in state: 46.
 ##
-## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
+## closedexp -> IF . eitherexp THEN closedexp ELSE closedexp [ LPAREN INT IF ID EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF
@@ -306,9 +302,9 @@ prog: DEF ID LPAREN RPAREN IF THEN
 
 prog: DEF ID LPAREN RPAREN IF INT RPAREN
 ##
-## Ends in an error in state: 42.
+## Ends in an error in state: 47.
 ##
-## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
+## closedexp -> IF eitherexp . THEN closedexp ELSE closedexp [ LPAREN INT IF ID EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF eitherexp
@@ -317,17 +313,17 @@ prog: DEF ID LPAREN RPAREN IF INT RPAREN
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
-## In state 23, spurious reduction of production eitherexp -> closedexp
+## In state 8, spurious reduction of production closedexp -> exp
+## In state 27, spurious reduction of production eitherexp -> closedexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN RPAREN IF INT THEN THEN
+prog: DEF ID LPAREN RPAREN IF INT THEN TIMES
 ##
-## Ends in an error in state: 43.
+## Ends in an error in state: 48.
 ##
-## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ INT IF ID EOF ELSE DEF ]
+## closedexp -> IF eitherexp THEN . closedexp ELSE closedexp [ LPAREN INT IF ID EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF eitherexp THEN
@@ -337,9 +333,9 @@ prog: DEF ID LPAREN RPAREN IF INT THEN THEN
 
 prog: DEF ID LPAREN RPAREN IF INT THEN INT THEN
 ##
-## Ends in an error in state: 44.
+## Ends in an error in state: 49.
 ##
-## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ INT IF ID EOF ELSE DEF ]
+## closedexp -> IF eitherexp THEN closedexp . ELSE closedexp [ LPAREN INT IF ID EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF eitherexp THEN closedexp
@@ -348,16 +344,16 @@ prog: DEF ID LPAREN RPAREN IF INT THEN INT THEN
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
+## In state 8, spurious reduction of production closedexp -> exp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-prog: DEF ID LPAREN RPAREN IF INT THEN INT ELSE THEN
+prog: DEF ID LPAREN RPAREN IF INT THEN INT ELSE TIMES
 ##
-## Ends in an error in state: 45.
+## Ends in an error in state: 50.
 ##
-## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ INT IF ID EOF ELSE DEF ]
+## closedexp -> IF eitherexp THEN closedexp ELSE . closedexp [ LPAREN INT IF ID EOF ELSE DEF ]
 ##
 ## The known suffix of the stack is as follows:
 ## IF eitherexp THEN closedexp ELSE
@@ -367,7 +363,7 @@ prog: DEF ID LPAREN RPAREN IF INT THEN INT ELSE THEN
 
 prog: INT THEN
 ##
-## Ends in an error in state: 47.
+## Ends in an error in state: 52.
 ##
 ## list(top) -> top . list(top) [ EOF ]
 ##
@@ -378,9 +374,9 @@ prog: INT THEN
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 11, spurious reduction of production closedexp -> exp
-## In state 23, spurious reduction of production eitherexp -> closedexp
-## In state 49, spurious reduction of production top -> eitherexp
+## In state 8, spurious reduction of production closedexp -> exp
+## In state 27, spurious reduction of production eitherexp -> closedexp
+## In state 54, spurious reduction of production top -> eitherexp
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>

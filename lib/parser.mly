@@ -16,16 +16,20 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 %token THEN
 %token ELSE
 %token DEF
-%token EXTERN
 %token LPAREN
 %token RPAREN
 %token LESSTHAN
 %token MINUS
 %token PLUS
+%token TIMES
 %token COMMA
 %token EOF
 
+// Priorities from lower to higher
 %left PLUS MINUS LESSTHAN
+%left TIMES
+%nonassoc ID
+%left LPAREN
 
 %start <prog> prog
 
@@ -54,6 +58,7 @@ exp:
   | c = constant { c }
   | b = binop { b }
   | x = lvalue { VarExp x }
+  | LPAREN; e = exp; RPAREN { e }
   | id = ID; LPAREN; args = exprlist; RPAREN
     { CallExp { id; args; pos = pos_of_lexing_position $startpos } }
 
@@ -102,6 +107,8 @@ binop:
     { BinExp { left; op = PlusOp; right} }
   | left = exp; MINUS; right = exp
     { BinExp { left; op = MinusOp; right} }
+  | left = exp; TIMES; right = exp
+    { BinExp { left; op = TimesOp; right } }
 
 lvalue:
   | id = ID { SimpleVar id }

@@ -21,5 +21,5 @@ and dec =
   | FunDec of { name : string; params : string list; body : exp; pos : pos }
 [@@deriving show]
 
-and op = PlusOp | MinusOp | LtOp [@@deriving show]
+and op = PlusOp | MinusOp | LtOp | TimesOp [@@deriving show]
 and var = SimpleVar of string [@@deriving show]
