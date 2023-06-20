@@ -90,8 +90,5 @@ let gentop top =
       topmod
   in
   let t = Llvm_target.CodeGenFileType.AssemblyFile in
-  let passManager = L.PassManager.create () in
-  let _ = M.add_analysis_passes passManager machine in
-  let _ = L.PassManager.run_module topmod passManager in
   let _ = M.emit_to_file topmod t "top.s" machine in
   L.string_of_llmodule topmod
