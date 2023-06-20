@@ -25,7 +25,7 @@ let pos_of_lexing_position (pos : Lexing.position) : pos =
 %token COMMA
 %token EOF
 
-// Priorities from lower to higher
+// Priorities from lower to higher linewise
 %left PLUS MINUS LESSTHAN
 %left TIMES
 %nonassoc ID
