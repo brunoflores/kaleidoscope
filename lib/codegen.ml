@@ -3,8 +3,6 @@ module L = Llvm
 let ctx = L.create_context ()
 let topmod = L.create_module ctx "top"
 
-(* -- *)
-
 let rec genexp (env : (string * L.llvalue) list) (b : L.llbuilder) = function
   | Ast.IntExp i ->
       let ty = L.float_type ctx in
@@ -39,17 +37,21 @@ and gendec (b : L.llbuilder) = function
       let argtys = Array.make n double in
       let rt = L.function_type double argtys in
       let fn = L.define_function name rt topmod in
-      let body = genexp [] b body in
+      let env =
+        Array.to_list
+        @@ Array.map2
+             (fun a1 a2 ->
+               L.set_value_name a1 a2;
+               (a1, a2))
+             (Array.of_list params) (L.params fn)
+      in
+      let body = genexp env b body in
       let entry = L.entry_block fn in
       let builder = L.builder_at_end ctx entry in
       let _ = L.build_ret body builder in
       fn
 
 let gentop top =
-  (* let ty = L.float_type ctx in *)
-  (* let v = float_of_int 42 in *)
-  (* let v = L.const_float ty v in *)
-  (* let _ = L.build_ret v builder in *)
   let mainrt = L.function_type (L.double_type ctx) [||] in
   let main = L.define_function "main" mainrt topmod in
   let entry = L.entry_block main in
