@@ -57,7 +57,7 @@ let pretty_print_err = function
 *)
 
 let succeed prog =
-  (* Format.printf "%a\n" Ast.pp_prog prog *)
+  (* let _ = Format.printf "%a\n\n" Ast.pp_prog prog in *)
   let code = Codegen.gentop prog in
   print_endline code
 

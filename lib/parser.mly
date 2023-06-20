@@ -43,10 +43,10 @@ eitherexp:
   | e = closedexp { e }
 
 dec:
-  | DEF; name = ID; LPAREN; arg = ID; RPAREN; body = closedexp
+  | DEF; name = ID; LPAREN; args = separated_list(COMMA, ID); RPAREN; body = closedexp
     { FunDec {
         name;
-        params = [arg];
+        params = args;
         body;
         pos = pos_of_lexing_position $startpos } }
 
