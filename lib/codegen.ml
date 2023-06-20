@@ -30,7 +30,7 @@ let rec genexp (env : (string * L.llvalue) list) (b : L.llbuilder) = function
       | None -> failwith @@ Format.sprintf "undefined function call: %s" id)
   | _ -> failwith "not implemented"
 
-and gendec (b : L.llbuilder) = function
+and gendec = function
   | Ast.FunDec { name; params; body; pos = _ } ->
       let double = L.double_type ctx in
       let n = List.length params in
@@ -45,9 +45,9 @@ and gendec (b : L.llbuilder) = function
                (a1, a2))
              (Array.of_list params) (L.params fn)
       in
-      let body = genexp env b body in
       let entry = L.entry_block fn in
       let builder = L.builder_at_end ctx entry in
+      let body = genexp env builder body in
       let _ = L.build_ret body builder in
       fn
 
@@ -64,7 +64,7 @@ let gentop top =
             let _ = genexp [] builder e in
             ()
         | Ast.TopDec d ->
-            let _ = gendec builder d in
+            let _ = gendec d in
             ())
       top
   in
